@@ -32,8 +32,8 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
             del self.norm  # remove the original norm
 
     def forward_features(self, x):
-        B = x.shape[0]
-        x = self.patch_embed(x)
+        B = x.shape[0]  # x -> (B, C, H, W )
+        x = self.patch_embed(x) # BCHW -> [B, num_patch, embed_dim]
 
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
         x = torch.cat((cls_tokens, x), dim=1)

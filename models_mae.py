@@ -145,6 +145,8 @@ class MaskedAutoencoderViT(nn.Module):
         # unshuffle to get the binary mask
         mask = torch.gather(mask, dim=1, index=ids_restore)
 
+        # x_masked [N, L*mask_ratio, D]
+        # mask [N, L]
         return x_masked, mask, ids_restore
 
     def forward_encoder(self, x, mask_ratio):
